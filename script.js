@@ -1,3 +1,11 @@
+/*
+1. Fetch the data from GitHub User Api at https://api.github.com/users/{username}
+2. Fetch the all repo's data  accessing at https://api.github.com/users/{username}/repos
+3. Fetch the organization data afterwards getting userData from fetch first
+4. Render in appropriate places in UI
+*/
+
+
 //accessing the elements
 const container = document.querySelector(".container");
 const input = document.querySelector(".header input");
@@ -63,27 +71,27 @@ document.onkeydown = (e) => {
 
 //fetching the valid user details
 async function fetchDetails(username) {
-    try{
+    try {
         notification.innerHTML = "";
         const responseFromRepo = await fetch(`https://api.github.com/users/${username}/repos`);
-        if(!responseFromRepo.ok){
-            if(responseFromRepo.status == 404){
+        if (!responseFromRepo.ok) {
+            if (responseFromRepo.status == 404) {
                 throw new Error("Couldn't find user");
             }
             throw new Error();
         }
         const userRepoData = await responseFromRepo.json();
         renderRepos(userRepoData);
-    
+
         const userDetailResponse = await fetch(`https://api.github.com/users/${username}`);
-        if(!userDetailResponse.ok){
+        if (!userDetailResponse.ok) {
             throw new Error();
         }
         const userDetailData = await userDetailResponse.json();
         renderUserDetail(userDetailData);
-    
+
         const response = await fetch(userDetailData.organizations_url);
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error();
         }
         const data = await response.json();
@@ -92,24 +100,25 @@ async function fetchDetails(username) {
         container.style.opacity = 1;
         loader.classList.remove("active");
     }
-    catch(error){
+    catch (error) {
         const msg = `Sorry, an error occured : ${error.message}😭`;
         showNotification(msg)
     }
-   
+
 }
 
 //count commits 
+//Note: not working because of too many get request in single time
 async function countCommits(repoUrl) {
     let response = await fetch(repoUrl);
     let data = await response.json();
     countCommits += data.length;
 }
-//render user repos
 
+//Render all the repos in UI
 function renderRepos(dataObjArr) {
     dataObjArr.forEach((data) => {
-
+        //count the Repo stars
         starEarnCount += data.stargazers_count;
 
         //API limit reached while counting total no of commits
@@ -164,7 +173,7 @@ console.log(organization)
 // const organizationAvatar = document.querySelector(".organizationAvatar img");
 
 function renderUserDetail(data) {
-    nameOfUser.innerHTML = data.name??"N/A";
+    nameOfUser.innerHTML = data.name ?? "N/A";
     userName.innerHTML = data.login;
     locationOfUser.innerHTML = data.location ?? "N/A";
     website.innerHTML = data.blog == "" ? "N/A" : data.blog;
@@ -184,18 +193,17 @@ function renderUserDetail(data) {
 }
 
 async function fetchOrganizationDetail(data) {
-    data.length == 0? organization.innerHTML = "N/A":
-   data.forEach((ele)=>{
-    let organizationTemplate =`<span class="organizationAvatar"><img src="${ele.avatar_url}" alt=""></span> <span class="organizationName">${ele.login}</span>`;
-    organization.insertAdjacentHTML("beforeend",organizationTemplate);
-  
-})
+    data.length == 0 ? organization.innerHTML = "N/A" :
+        data.forEach((ele) => {
+            let organizationTemplate = `<span class="organizationAvatar"><img src="${ele.avatar_url}" alt=""></span> <span class="organizationName">${ele.login}</span>`;
+            organization.insertAdjacentHTML("beforeend", organizationTemplate);
 
-    // organizationAvatar.src = data[0].avatar_url;
-    // organizationName.innerHTML = data[0].login;
+        })
 }
 
-function resetData(){
+function resetData() {
+
+    //reset user data
     nameOfUser.innerHTML = "";
     userName.innerHTML = "";
     locationOfUser.innerHTML = "";
@@ -214,8 +222,10 @@ function resetData(){
     usernameInCard.innerHTML = "";
     organization.innerHTML = "";
 
+    //reset  personal and forked repo wrapper data
     personalRepoWrapper.innerHTML = "";
     forkedRepoWrapper.innerHTML = "";
 
+    //hide UI
     container.style.opacity = 0;
 }

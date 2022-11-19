@@ -11,7 +11,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
+/*HEADING STYLE BEGINS HERE */
 
 .header {
     border-bottom: 2px solid rgba(0, 0, 0, 0.179);
@@ -92,6 +92,8 @@ body {
 .header .active {
     display: block;
 }
+
+/*CONTAINER STYLES BEGINS HERE */
 
 .container {
     width: 80%;
@@ -213,7 +215,7 @@ body {
 }
 
 
-/* Repository Part */
+/*REPOSITORY WRAPPER STYLES BEGINS HERE*/
 
 .repo-wrapper .section-heading {
     
@@ -264,19 +266,7 @@ body {
     margin-top: 8px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*STYLES FOR RESPONSIVENESS BEGINS HERE */
 
 
 @media screen and (max-width: 1012px){
@@ -314,6 +304,4 @@ body {
         display: block;
         margin-bottom: 6px;
        }
-
-      
 }
