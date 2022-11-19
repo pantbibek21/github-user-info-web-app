@@ -1,23 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/Images/favicon.svg">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>GitHub User Info</title>
 </head>
+
 <body>
+    <header class="header">
+        <h1 class="heading-text">Search the details of <span>GitHub</span> user</h1>
+        <input type="text" placeholder="Enter the valid GitHub user name">
+        <div class="buttons">
+            <button id="search-btn">Search</button>
+            <button id="clear-btn">Clear</button>
+        </div>
+        <p class="notification-msg"></p>
+    </header>
     <main class="container">
-        <header class="header">
-            <h1 class="heading-text">Search the details of <span>GitHub</span> user</h1>
-            <input type="text" placeholder="Enter the valid GitHub user name">
-            <div class="buttons">
-                <button id="search">Search</button>
-                <button id="clear">Clear</button>
+
+        <!-- headers begins -->
+
+       
+
+        <!-- user details section begins -->
+
+        <section class="user-wrapper">
+            <div class="user-info-card">
+                <div class="user-card">
+                    <div class="img-wrapper">
+                        <img src="" alt="" class="user-profile">
+                    </div>
+                    <div class="nameWrapper">
+                       <span class="nameInCard"></span>
+                        <span class="usernameInCard"></span>
+                    </div>
+                    <div class="bio"></div>
+                    <div class="followers-wrapper">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span class="count following-count"></span> following <span class="dot"></span>
+                        <span class="count followers-count"></span> followers
+                    </div>
+                </div>
+                <div class="user-details">
+                    <div class="row">
+                        <label>Name : </label> <span class="nameOfUser"></span>
+                    </div>
+                    <div class="row">
+                        <label>Username : </label><span class="username"></span>
+                    </div>
+                    <div class="row">
+                        <label>Location : </label><span class="location"></span>
+                    </div>
+                    <div class="row">
+                        <label>Website : </label><span class="website"></span>
+                    </div>
+                    <div class="row">
+                        <label>Twitter : </label><span class="twitter"></span>
+                    </div>
+                    <div class="row">
+                        <label>Public Repository : </label><span class="public-repo"></span>
+                    </div>
+                    <div class="row">
+                        <label>Star earned: </label><span class="star-earn"></span>
+                    </div>
+                    <div class="row">
+                        <label>Total Commits : </label><span class="total-commits"></span>
+                    </div>
+                    <div class="row">
+                        <label>Created on : </label><span class="created-on"></span>
+                    </div>
+                    <div class="row">
+                        <label>Last commited on : </label><span class="last-commited-on"></span>
+                    </div>
+                    <!-- <div class="row">
+                        <label>Achievements : </label>Some Achievements
+                    </div>
+                    <div class="row">
+                        <label>Highlights : </label>Some highlights
+                    </div> -->
+                    <div class="row">
+                        <label>Organizations : </label><span class="organizations"></span>
+                    </div>
+                </div>
             </div>
-        </header>
+        </section>
+
+
+        <section class="repo-wrapper">
+            <h2 class="section-heading">Personal Repos</h2>
+            <div class="personal-repos">
+                <!-- <div class="repo">
+                    <h3 class="repo-name">Dennis-Ritchie-Tribute-Page</h3>
+                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nihil alias minima.</p>
+                    <p class="languages"><span class="label">languages : </span>HTML, CSS, JS</p>
+                    <p class="repo-created-on"><span class="label">repo created at : </span>2022-10-16</p>
+                    <p class="repo-updated-on"><span class="label">repo updated at : </span>2022-10-16</p>
+                    <a href="#" class="repo-link">Repo Link <i class="fa-solid fa-link"></i></a>
+                </div> -->
+            </div>
+
+            <h2 class="section-heading">Forked Repos</h2>
+            <div class="forked-repos">
+                <!-- <div class="repo">
+                    <h3 class="repo-name">Dennis-Ritchie-Tribute-Page</h3>
+                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nihil alias minima.</p>
+                    <p class="languages"><span class="label">languages : </span>HTML, CSS, JS</p>
+                    <p class="repo-forked-on"><span class="label">repo created at : </span>2022-10-16</p>
+                    <p class="repo-updated-on"><span class="label">repo updated at : </span>2022-10-16</p>
+                    <a href="#" class="repo-link">Repo Link <i class="fa-solid fa-link"></i></a>
+                </div> -->
+            </div>
+        </section>
+
     </main>
+
+
+    <script src="script.js"></script>
 </body>
+
 </html>
