@@ -19,6 +19,7 @@ const validateUser = function () {
         showNotification("Invalid username 😭, search again :(")
         return;
     }
+
     if (userName.trim().split(" ").length > 1) {
         showNotification("Invalid username 😭,username cannot have space :(")
         return;
@@ -33,6 +34,7 @@ const validateUser = function () {
 //showing the notification to user
 function showNotification(msg) {
     notification.innerHTML = msg;
+    loader.classList.remove("active");
 }
 
 //clearing the notification message from UI
@@ -55,13 +57,14 @@ document.onkeydown = (e) => {
     if (e.key == 'Enter') {
         resetData();
         validateUser();
-        clearNotification();
+        // clearNotification();
     }
 }
 
 //fetching the valid user details
 async function fetchDetails(username) {
     try{
+        notification.innerHTML = "";
         const responseFromRepo = await fetch(`https://api.github.com/users/${username}/repos`);
         if(!responseFromRepo.ok){
             if(responseFromRepo.status == 404){
