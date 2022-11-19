@@ -6,12 +6,14 @@ const clearBtn = document.querySelector(".header #clear-btn");
 const notification = document.querySelector(".notification-msg");
 const personalRepoWrapper = document.querySelector(".personal-repos");
 const forkedRepoWrapper = document.querySelector(".forked-repos");
+const loader = document.querySelector(".loader");
 let totalRepos = 0;
 let starEarnCount = 0;
 let totalCommits = 0;
 
 //validating the username
 const validateUser = function () {
+    loader.classList.add("active");
     let userName = input.value;
     if (userName == "" || userName.trim() == "") {
         showNotification("Invalid username 😭, search again :(")
@@ -53,6 +55,7 @@ document.onkeydown = (e) => {
     if (e.key == 'Enter') {
         resetData();
         validateUser();
+        clearNotification();
     }
 }
 
@@ -82,7 +85,9 @@ async function fetchDetails(username) {
         }
         const data = await response.json();
         fetchOrganizationDetail(data);
+        showNotification("");
         container.style.opacity = 1;
+        loader.classList.remove("active");
     }
     catch(error){
         const msg = `Sorry, an error occured : ${error.message}😭`;
@@ -156,7 +161,7 @@ console.log(organization)
 // const organizationAvatar = document.querySelector(".organizationAvatar img");
 
 function renderUserDetail(data) {
-    nameOfUser.innerHTML = data.name;
+    nameOfUser.innerHTML = data.name??"N/A";
     userName.innerHTML = data.login;
     locationOfUser.innerHTML = data.location ?? "N/A";
     website.innerHTML = data.blog == "" ? "N/A" : data.blog;

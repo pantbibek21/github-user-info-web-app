@@ -80,6 +80,18 @@ body {
     transform: translateX(-50%);
 }
 
+.header .loader {
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Courier New', Courier, monospace;
+    display: none;
+}
+
+.header .active {
+    display: block;
+}
 
 .container {
     width: 80%;
