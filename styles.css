@@ -90,7 +90,7 @@ body {
     border-radius: 12px;
     margin-bottom: 40px;
     transition: all 0.2s ease;
-    /* opacity: 0; */
+    opacity: 0;
 }
 
 .user-wrapper .user-info-card {

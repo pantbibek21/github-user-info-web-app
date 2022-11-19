@@ -51,25 +51,44 @@ clearBtn.addEventListener("click", clearNotification);
 //firing  validateuser() on hitting enter
 document.onkeydown = (e) => {
     if (e.key == 'Enter') {
+        resetData();
         validateUser();
     }
 }
 
 //fetching the valid user details
 async function fetchDetails(username) {
-    const responseFromRepo = await fetch(`https://api.github.com/users/${username}/repos`);
-    const userRepoData = await responseFromRepo.json();
-    renderRepos(userRepoData);
-
-    const userDetailResponse = await fetch(`https://api.github.com/users/${username}`);
-    const userDetailData = await userDetailResponse.json();
-    renderUserDetail(userDetailData);
-
-    const response = await fetch(userDetailData.organizations_url);
-    const data = await response.json();
-    fetchOrganizationDetail(data);
-    searchBtn.disabled = true;
-    container.style.opacity = 1;
+    try{
+        const responseFromRepo = await fetch(`https://api.github.com/users/${username}/repos`);
+        if(!responseFromRepo.ok){
+            if(responseFromRepo.status == 404){
+                throw new Error("Couldn't find user");
+            }
+            throw new Error();
+        }
+        const userRepoData = await responseFromRepo.json();
+        renderRepos(userRepoData);
+    
+        const userDetailResponse = await fetch(`https://api.github.com/users/${username}`);
+        if(!userDetailResponse.ok){
+            throw new Error();
+        }
+        const userDetailData = await userDetailResponse.json();
+        renderUserDetail(userDetailData);
+    
+        const response = await fetch(userDetailData.organizations_url);
+        if(!response.ok){
+            throw new Error();
+        }
+        const data = await response.json();
+        fetchOrganizationDetail(data);
+        container.style.opacity = 1;
+    }
+    catch(error){
+        const msg = `Sorry, an error occured : ${error.message}😭`;
+        showNotification(msg)
+    }
+   
 }
 
 //count commits 
@@ -140,7 +159,7 @@ function renderUserDetail(data) {
     nameOfUser.innerHTML = data.name;
     userName.innerHTML = data.login;
     locationOfUser.innerHTML = data.location ?? "N/A";
-    website.innerHTML = data.blog ?? "N/A";
+    website.innerHTML = data.blog == "" ? "N/A" : data.blog;
     twitter.innerHTML = data.twitter_username ?? "N/A";
     publicRepo.innerHTML = totalRepos;
     starEarned.innerHTML = starEarnCount;
@@ -153,10 +172,11 @@ function renderUserDetail(data) {
     userProfile.src = data.avatar_url;
     nameInCard.innerHTML = data.name;
     usernameInCard.innerHTML = data.login;
+    usernameInCard.href = data.html_url;
 }
 
 async function fetchOrganizationDetail(data) {
-    
+    data.length == 0? organization.innerHTML = "N/A":
    data.forEach((ele)=>{
     let organizationTemplate =`<span class="organizationAvatar"><img src="${ele.avatar_url}" alt=""></span> <span class="organizationName">${ele.login}</span>`;
     organization.insertAdjacentHTML("beforeend",organizationTemplate);
@@ -188,4 +208,6 @@ function resetData(){
 
     personalRepoWrapper.innerHTML = "";
     forkedRepoWrapper.innerHTML = "";
+
+    container.style.opacity = 0;
 }
